@@ -1,11 +1,14 @@
-FROM golang:1.21
+FROM golang:1.21-alpine
 
 WORKDIR /app
+
+COPY go.mod ./
+RUN go mod tidy
+
 COPY . .
 
-RUN go mod tidy
-RUN go build -o server .
+RUN go build -o app .
 
 EXPOSE 50051
 
-CMD ["./server"]
+CMD ["./app"]
